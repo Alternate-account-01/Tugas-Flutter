@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_the_second/home_page.dart';
 import 'package:flutter_the_second/register.dart';
+import 'package:flutter_the_second/widget/widget_button.dart';
+import 'package:flutter_the_second/widget/widge_TextField.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -81,30 +83,38 @@ class _LoginPageState extends State<LoginPage> {
               style: TextStyle(fontSize: 18),
             ),
             SizedBox(height: 20),
-            TextField(
-              controller: _usernameController,
-              obscureText: true,
-              decoration: InputDecoration(
-                labelText: "Username",
-                border: OutlineInputBorder(),
-              ),
+
+            MyTextField(
+              textEditingController: _usernameController,
+              label: "Username",
             ),
-            SizedBox(height: 15),
-            TextField(
-              controller: _passwordController,
-              obscureText: true,
-              decoration: InputDecoration(
-                labelText: "Password",
-                border: OutlineInputBorder(),
-              ),
+
+            MyTextField(
+              textEditingController: _passwordController,
+              label: "Password",
             ),
+
             SizedBox(height: 25),
-            ElevatedButton(onPressed: _handleLogin, child: Text("Login")),
-            SizedBox(height: 15),
-            ElevatedButton(
-              onPressed: _navigateToRegister,
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.blueGrey),
-              child: Text("Belum punya akun? Daftar di sini"),
+            SizedBox(
+              width: double.infinity,
+              child: CustomButton(
+                text: "Login",
+                textcolor: const Color.fromARGB(255, 0, 0, 0),
+                onPressed: () {
+                  print("yes");
+                },
+              ),
+            ),
+            Container(
+              width: double.infinity,
+              margin: const EdgeInsets.only(top: 10),
+              child: CustomButton(
+                text: "Regin",
+                textcolor: const Color.fromARGB(255, 0, 0, 0),
+                onPressed: () {
+                  print("yes");
+                },
+              ),
             ),
           ],
         ),

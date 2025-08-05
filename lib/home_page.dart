@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_the_second/widget/clear_button.dart';
+import 'package:flutter_the_second/widget/operation_button.dart';
+import 'package:flutter_the_second/widget/text_fields.dart';
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -15,7 +17,41 @@ class _HomePageState extends State<HomePage> {
   void _clearFields() {
     _controller1.clear();
     _controller2.clear();
-    _resultController.clear(); // <- ini yang benar
+    _resultController.clear();
+  }
+
+  void _calculate(String operator) {
+    final nomor1 = double.tryParse(_controller1.text);
+    final nomor2 = double.tryParse(_controller2.text);
+
+    if (nomor1 != null && nomor2 != null) {
+      double hasil;
+
+      switch (operator) {
+        case '+':
+          hasil = nomor1 + nomor2;
+          break;
+        case '-':
+          hasil = nomor1 - nomor2;
+          break;
+        case '×':
+          hasil = nomor1 * nomor2;
+          break;
+        case '÷':
+          hasil = nomor1 / nomor2;
+          break;
+        default:
+          return;
+      }
+
+      if (hasil % 1 == 0) {
+        _resultController.text = hasil.toInt().toString();
+      } else {
+        _resultController.text = hasil.toStringAsFixed(2);
+      }
+    } else {
+      _resultController.text = "Masukkan dulu angkanya, pls.";
+    }
   }
 
   @override
@@ -30,102 +66,23 @@ class _HomePageState extends State<HomePage> {
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            TextField(
-              controller: _controller1,
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                labelText: 'Angka Pertama',
-                border: OutlineInputBorder(),
-              ),
-            ),
+            InputField(controller: _controller1, label: 'Angka Pertama'),
             const SizedBox(height: 16),
-            TextField(
-              controller: _controller2,
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                labelText: 'Angka Kedua',
-                border: OutlineInputBorder(),
-              ),
-            ),
+            InputField(controller: _controller2, label: 'Angka Kedua'),
             const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                ElevatedButton(
-                  onPressed: () {
-                    final nomor1 = double.tryParse(_controller1.text);
-                    final nomor2 = double.tryParse(_controller2.text);
-                    if (nomor1 != null && nomor2 != null) {
-                      final hasil = nomor1 + nomor2;
-                      if (hasil % 1 == 0) {
-                        _resultController.text = hasil.toInt().toString();
-                      }
-                    } else {
-                      _resultController.text = "Masukkan dulu angkanya, pls.";
-                    }
-                  },
-
-                  child: const Text('+'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    final nomor1 = double.tryParse(_controller1.text);
-                    final nomor2 = double.tryParse(_controller2.text);
-                    if (nomor1 != null && nomor2 != null) {
-                      final hasil = nomor1 - nomor2;
-                      if (hasil % 1 == 0) {
-                        _resultController.text = hasil.toInt().toString();
-                      }
-                    } else {
-                      _resultController.text = "Masukkan dulu angkanya, pls.";
-                    }
-                  },
-                  child: const Text('-'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                   final nomor1 = double.tryParse(_controller1.text);
-                    final nomor2 = double.tryParse(_controller2.text);
-                    if (nomor1 != null && nomor2 != null) {
-                      final hasil = nomor1 * nomor2;
-                      if (hasil % 1 == 0) {
-                        _resultController.text = hasil.toInt().toString();
-                      }
-                    } else {
-                      _resultController.text = "Masukkan dulu angkanya, pls.";
-                    }
-                  },
-                  child: const Text('×'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    final nomor1 = double.tryParse(_controller1.text);
-                    final nomor2 = double.tryParse(_controller2.text);
-                    if (nomor1 != null && nomor2 != null) {
-                      final hasil = nomor1 / nomor2;
-                      if (hasil % 1 == 0) {
-                        _resultController.text = hasil.toInt().toString();
-                      }
-                    } else {
-                      _resultController.text = "Masukkan dulu angkanya, pls.";
-                    }
-                  },
-                  child: const Text('÷'),
-                ),
+                OperationButton(label: '+', onPressed: () => _calculate('+')),
+                OperationButton(label: '-', onPressed: () => _calculate('-')),
+                OperationButton(label: '×', onPressed: () => _calculate('×')),
+                OperationButton(label: '÷', onPressed: () => _calculate('÷')),
               ],
             ),
             const SizedBox(height: 20),
-            TextField(
-              controller: _resultController,
-              readOnly: true,
-              decoration: const InputDecoration(labelText: 'Hasil'),
-            ),
+            ResultField(controller: _resultController),
             const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _clearFields,
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-              child: const Text('Clear'),
-            ),
+            ClearButton(onPressed: _clearFields),
           ],
         ),
       ),
