@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_the_second/routes/routes.dart';
 import 'package:get/get.dart';
 import 'package:flutter_the_second/widget/widget_button.dart';
 import 'package:flutter_the_second/widget/widge_TextField.dart';
@@ -56,7 +57,15 @@ class CalculatorPage extends StatelessWidget {
                   style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 )),
             const SizedBox(height: 20),
-            CustomButton(text: 'Clear', onPressed: controller.clear),
+
+            // Fixed: combine actions in one onPressed
+            CustomButton(
+              text: 'Move to Football Player',
+              onPressed: () {
+                controller.clear();
+                Get.offAllNamed(AppRoutes.footballplayers);
+              },
+            ),
           ],
         ),
       ),
