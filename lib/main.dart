@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_the_second/routes/patches.dart';
 import 'package:flutter_the_second/routes/routes.dart';
 import 'package:get/get.dart';
-import 'package:flutter_the_second/login_page.dart';
 import 'package:flutter_the_second/pages/calculator_page.dart';
 
 void main() {
@@ -20,7 +19,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      initialRoute: AppRoutes.calculator,
+      initialRoute: AppRoutes.login,
       getPages: AppPage.pages,
       debugShowCheckedModeBanner: false,
     );

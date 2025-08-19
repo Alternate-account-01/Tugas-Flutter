@@ -13,59 +13,85 @@ class CalculatorPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Simple Calculator')),
-      body: Padding(
+      appBar: AppBar(
+        title: const Text(
+          'Simple Calculator',
+          style: TextStyle(fontWeight: FontWeight.w600),
+        ),
+        centerTitle: true,
+        elevation: 2,
+      ),
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(20.0),
         child: Column(
-          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            // Input fields
+            const Text(
+              "Enter first number",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+            ),
+            const SizedBox(height: 8),
             MyTextField(
               textEditingController: controller.firstNumberController,
-              label: 'angka 1',
-            ),
-            const SizedBox(height: 10),
-            MyTextField(
-              textEditingController: controller.secondNumberController,
-              label: 'angka 2',
+              label: 'Number 1',
             ),
             const SizedBox(height: 20),
 
-            Column(
+            const Text(
+              "Enter second number",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+            ),
+            const SizedBox(height: 8),
+            MyTextField(
+              textEditingController: controller.secondNumberController,
+              label: 'Number 2',
+            ),
+
+            const SizedBox(height: 24),
+
+            // Operator buttons
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    CustomButton(text: '+', onPressed: controller.add),
-                    CustomButton(text: '-', onPressed: controller.subtract),
-                  ],
-                ),
-                const SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    CustomButton(text: 'x', onPressed: controller.multiply),
-                    CustomButton(text: '/', onPressed: controller.divide),
-                  ],
-                ),
+                CustomButton(text: '+', onPressed: controller.add),
+                CustomButton(text: '-', onPressed: controller.subtract),
+              ],
+            ),
+            const SizedBox(height: 12),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                CustomButton(text: '×', onPressed: controller.multiply),
+                CustomButton(text: '÷', onPressed: controller.divide),
               ],
             ),
 
-            const SizedBox(height: 20),
-            const Text('Hasil'),
-            Obx(() => Text(
-                  controller.hasil.value,
-                  style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                )),
-            const SizedBox(height: 20),
+            const SizedBox(height: 30),
 
-            // Fixed: combine actions in one onPressed
-            CustomButton(
-              text: 'Move to Football Player',
-              onPressed: () {
-                controller.clear();
-                Get.offAllNamed(AppRoutes.footballplayers);
-              },
+            // Result
+            const Text(
+              'Result',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+              textAlign: TextAlign.center,
             ),
+            const SizedBox(height: 8),
+            Obx(
+              () => Text(
+                controller.hasil.value,
+                style: const TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.blue,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+
+            const SizedBox(height: 30),
+
+           
+            
           ],
         ),
       ),
